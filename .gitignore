@@ -1,0 +1,91 @@
+# =========================
+# Python cache / compiled
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# Compiled extensions / binaries
+# =========================
+*.so
+*.dll
+*.dylib
+*.o
+*.a
+
+# Ignore ALL .pyd by default...
+*.pyd
+
+# ...BUT keep your packaged .pyd files
+!CarbonX/**/*.pyd
+
+# =========================
+# Distribution / packaging
+# =========================
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# =========================
+# Virtual environments
+# =========================
+venv/
+.env/
+env/
+ENV/
+
+# =========================
+# Installer logs
+# =========================
+pip-log.txt
+pip-delete-this-directory.txt
+
+# =========================
+# Test / coverage
+# =========================
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+pytest_cache/
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDEs
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Data files (optional)
+# =========================
+*.dat
+*.txt
+
+# Keep test data if needed
+!tests/**/*.dat
+
+# =========================
+# Wheels (never track)
+# =========================
+*.whl
