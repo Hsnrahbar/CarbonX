@@ -4,7 +4,7 @@
 
 **CarbonX** is an object-oriented Python package for simulating gas-phase synthesis of single- and multi-walled carbon nanotubes (CNTs) and metallic nanoparticles (Fe, Ni, Co) in floating-catalyst chemical vapor deposition (FCCVD) reactors. Its modular, extensible architecture couples four fully-integrated submodules: chemical kinetics, surface kinetics, particle dynamics, and CNT dynamics — along with a built-in machine learning classification module for parametric map analysis.
 
-> 📄 Full documentation and case studies are available at [https://github.com/Hsnrahbar/CarbonX](https://github.com/Hsnrahbar/CarbonX).
+> 📄 Full documentation and case studies are available at [[https://github.com/Hsnrahbar/CarbonX](https://github.com/Hsnrahbar/CarbonX](https://github.com/Hsnrahbar/CarbonX/blob/main/docs/Manual_CarbonX.pdf)).
 
 ---
 
