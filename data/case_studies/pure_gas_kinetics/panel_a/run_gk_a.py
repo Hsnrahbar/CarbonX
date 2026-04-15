@@ -24,7 +24,7 @@ model = GasReactor(
         xdtube=.022,
         gas_initial_composition={'C2H4' :   0.02,'C2H2' :   1e-15,   'Ar'   :   0.98},
         dp_initial_premade=5.6e-9,
-        kinetics_mechanism_type='Caltech'))
+        kinetics_mechanism_type='FFCM2'))
 
 _, solutions = model.solve()
 
