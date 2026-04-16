@@ -31,7 +31,6 @@ model = carbonx_wrapper.GasReactor(
         time_increment_Fe=1e-4,
         surface_kinetics_solver_activated=False,
         carb_struct_enabled=False,
-        surface_kinetics_type="Multilayerd_Model",
     ))  
 _, solutions = model.solve()
 
