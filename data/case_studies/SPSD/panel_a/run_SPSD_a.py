@@ -32,14 +32,13 @@ model = carbonx_wrapper.GasReactor(
         surface_kinetics_solver_activated=False,
         carb_struct_enabled=False,
         surface_kinetics_type="Multilayerd_Model",
-    )
-)  # "Surface_Kinetics_Ma_etal_2005" "Surface_Kinetics_Puretzky_etal_2005"
-_, solutions = model.run()
-# Optional:
-# Uncomment this line only when you want to export the model data.
-# This creates a "data" folder in the current working directory.
-#object_converter.object_converter(model)
+    ))  
+_, solutions = model.solve()
 
 import Results_Processor 
 AA=Results_Processor.ResultsPostProcessor(model)
-AA.plot_psi_eta_diagram([.0001, .0005, .4],add_experimental=True,regime_type='CR')
+AA.plot_psi_eta_diagram([.0001, .0005, .4],add_experimental=True,regime_type='fmr')
+
+import Results_Processor 
+AA=Results_Processor.ResultsPostProcessor(model) 
+fig, ax, sigma_g_g, sigma_g_m, sigma_g_v=AA.plot_geometric_standard_deviations(plot_until=5000, figsize=(10, 6))
