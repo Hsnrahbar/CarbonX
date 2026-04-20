@@ -1,14 +1,7 @@
-from pathlib import Path
-
-import carbonx_wrapper
-import mapping_wrapper
-import object_converter
-from simulation_setup_loader import build_kwargs
-
-
-SETUP_FILE = Path(__file__).with_name("simulation_setup.txt")
-
-model = carbonx_wrapper.GasReactor(
+from carbonx import GasReactor
+from carbonx.modules.simulation_setup_loader import build_kwargs
+SETUP_FILE = Path("simulation_setup.txt")
+model = GasReactor(
     **build_kwargs(
         SETUP_FILE,
         catalsyt_element="Fe",
