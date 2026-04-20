@@ -118,17 +118,44 @@ _, solutions = model.run()
 Use `MappingWrapper` to sweep over multiple reactor conditions and generate 2D parametric maps:
 
 ```python
-import carbonx.modules.mapping_wrapper as mapping_wrapper
+from pathlib import Path
+from carbonx import MappingWrapper
+from carbonx.modules.simulation_setup_loader import build_kwargs
 
-wrapper = mapping_wrapper.MappingWrapper(
-    **build_kwargs(
-        SETUP_FILE,
-        map_param="T&P",
-        # ... additional parameters
-    )
-)
+SETUP_FILE = Path("simulation_setup.txt")
 
-wrapper.run()
+model = MappingWrapper (map_requested="P&T",
+                          grid_total =1025,
+                          P_range_min =0.001 ,
+                          P_range_max =0.01 ,
+                          P_iso =0.01 ,
+                          T_range_min =800 ,
+                          T_range_max =1200 ,
+                          T_iso =873 ,
+                          xdp_range_min =10e-9 ,
+                          xdp_range_max =50e-9 ,
+                          xdp_const =15e-9 ,
+                          L_reactor_range_min =0.1 ,
+                          L_reactor_range_max =1 ,
+                          L_reactor =0.6 ,
+                          xN_range_min =1e17 ,
+                          xN_range_max =10e17 ,
+                          xN_const =1e11 ,
+                          scale_min =10e-8 ,
+                          scale_max =7e-6 ,
+                          ml_method = " mean " ,
+                          ml_lambda_ =0.001 ,
+                          ml_iterations =10000 ,
+                          ml_alpha =1.5 ,
+                          surface_kinetics_type = " multilayered_model " ,# "multilayered_model"
+                          ml_post_cond = True) 
+ 
+_, solutions = model.run()
+
+
+results = model.run_parametric_study()
+model.parametricstudyvisualizer()
+
 ```
 
 The built-in ML classification module will automatically identify SWCNT and MWCNT formation regions across the generated map.
