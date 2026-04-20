@@ -193,14 +193,13 @@ After running a simulation, the `model` instance provides full access to all sim
 ### Built-in Post-Processing
 
 ```python
-import Results_Processor_5
-
-times, solutions = model.solve()
-
-AA = Results_Processor_5.ResultsPostProcessor(model)
+from carbonx import Results_Processor 
+AA=Results_Processor.ResultsPostProcessor(model)
+AA.plot_psi_eta_diagram([.0001, .0005, .4],add_experimental=True,regime_type='fmr')
 
 # ψ–η diagram with experimental comparison
-AA.plot_psi_eta_diagram([0.004, 0.4, 1], add_experimental=True, regime_type='CR')
+AA=Results_Processor.ResultsPostProcessor(model) 
+fig, ax, sigma_g_g, sigma_g_m, sigma_g_v=AA.plot_geometric_standard_deviations(plot_until=5000, figsize=(10, 6))
 
 # Carbon mass balance
 fig, axes, data = AA.mass_balance_check()
