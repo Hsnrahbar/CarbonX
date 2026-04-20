@@ -83,26 +83,34 @@ from carbonx.modules.simulation_setup_loader import build_kwargs
 
 SETUP_FILE = Path("simulation_setup.txt")
 
+
+
 model = GasReactor(
     **build_kwargs(
         SETUP_FILE,
-        catalyst_element="Fe",
+        catalsyt_element="Ni",
+        intnum= 37,
         bin_spacing=1.9,
-        length_step="flex_tight",
+        rtol=1e-12,
+        atol= 1e-38,
+        length_step = 'flex_loose',
         kernel_type="fuchs",
-        temperature_history="celnik_2008",
+        wrapper_mapping_temp=None,
+        temperature_history="custom",
+        total_initial_concentration=1e+11,
         E_a1=0.9,
-        reactor_length=0.52,
-        xdtube=0.02,
-        gas_initial_composition={"C2H2": 0.0045, "N2": 0.9},
-        dp_initial_premade=5.6e-9,
+        __xqtot=2.01e-5,
+        reactor_length=0.6,
+        xdtube=0.0254,
+        gas_initial_composition={"C2H2": 0.0045, "H2": 0.045, "N2": 1 - 0.0045- 0.045},
+        dp_initial_premade=15e-9, 
         surface_kinetics_solver_activated=True,
         carb_struct_enabled=True,
-        surface_kinetics_type="Surface_Kinetics_General_UDF",
+        surface_kinetics_type="Multilayerd_Model",
     )
-)
+)  
+_, solutions = model.run()
 
-times, solutions = model.run()
 ```
 
 ### Parametric Map Generation
