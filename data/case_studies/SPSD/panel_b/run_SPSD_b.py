@@ -31,7 +31,7 @@ model = GasReactor(
     )) 
 _, solutions = model.run()
 
-import Results_Processor 
+from carbonx import Results_Processor 
 AA=Results_Processor.ResultsPostProcessor(model)
 AA.plot_psi_eta_diagram([.0001, .0005, .4],add_experimental=True,regime_type='CR') 
 
