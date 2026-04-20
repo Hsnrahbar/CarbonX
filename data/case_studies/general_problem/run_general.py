@@ -1,11 +1,12 @@
 from pathlib import Path
-import carbonx_wrapper
-from simulation_setup_loader import build_kwargs
+from carbonx import GasReactor
+from carbonx.modules.simulation_setup_loader import build_kwargs
+
+SETUP_FILE = Path("simulation_setup.txt")
 
 
-SETUP_FILE = Path(__file__).with_name("simulation_setup.txt")
 
-model = carbonx_wrapper.GasReactor(
+model = GasReactor(
     **build_kwargs(
         SETUP_FILE,
         catalsyt_element="Ni",
