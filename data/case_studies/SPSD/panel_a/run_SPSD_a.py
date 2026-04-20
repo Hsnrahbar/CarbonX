@@ -31,10 +31,9 @@ model = GasReactor(
     ))  
 _, solutions = model.solve()
 
-import Results_Processor 
+from carbonx import Results_Processor 
 AA=Results_Processor.ResultsPostProcessor(model)
 AA.plot_psi_eta_diagram([.0001, .0005, .4],add_experimental=True,regime_type='fmr')
 
-import Results_Processor 
 AA=Results_Processor.ResultsPostProcessor(model) 
 fig, ax, sigma_g_g, sigma_g_m, sigma_g_v=AA.plot_geometric_standard_deviations(plot_until=5000, figsize=(10, 6))
