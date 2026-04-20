@@ -1,8 +1,8 @@
 from pathlib import Path
 from carbonx import MappingWrapper
-from carbonx . modules . simulation_setup_loader import build_kwargs
+from carbonx.modules.simulation_setup_loader import build_kwargs
 
-SETUP_FILE = Path(__file__).with_name("simulation_setup.txt")
+SETUP_FILE = Path("simulation_setup.txt")
 
 model = MappingWrapper (map_requested="P&T",
                           grid_total =1025,
