@@ -78,37 +78,43 @@ Use the `GasReactor` class for a single set of reactor conditions:
 
 ```python
 from pathlib import Path
-from carbonx import GasReactor
+from carbonx.core.carbonx_wrapper import FCCVD_GasReactor
 from carbonx.modules.simulation_setup_loader import build_kwargs
+from carbonx.core.carbonx_wrapper import SCVD_GasReactor
+
 
 SETUP_FILE = Path("simulation_setup.txt")
-
-
-
-model = GasReactor(
+model = FCCVD_GasReactor(
     **build_kwargs(
         SETUP_FILE,
         catalsyt_element="Ni",
-        intnum= 37,
+        kinetics_mechanism_type="FFCM2",
+        collision_type="dm&dg",
+        intnum= 24,
         bin_spacing=1.9,
-        rtol=1e-12,
-        atol= 1e-38,
-        length_step = 'flex_loose',
+        rtol=1e-6,
+        atol= 1e-105,
+        length_step = 'flex_tight',
         kernel_type="fuchs",
         wrapper_mapping_temp=None,
         temperature_history="custom",
-        total_initial_concentration=1e+11,
-        E_a1=0.9,
-        __xqtot=2.01e-5,
-        reactor_length=0.6,
+        total_initial_concentration=1e+17,
+        E_a1=0.5,
+        fraction_cnt_gp=0.99,
+        __xqtot=1.667e-5,
+        reactor_length=0.55,
         xdtube=0.0254,
         gas_initial_composition={"C2H2": 0.0045, "H2": 0.045, "N2": 1 - 0.0045- 0.045},
         dp_initial_premade=15e-9, 
         surface_kinetics_solver_activated=True,
         carb_struct_enabled=True,
-        surface_kinetics_type="Multilayerd_Model",
-    )
-)  
+        collision_kernel_enhc=True, ##*****Note! when this kernel_enhc is activated make sure we dont define many to much bins because it reduced the speed of the code significantly 
+        cnt_length_bundling_effect=1e-10,
+        surface_kinetics_type = "Multilayerd_Model",#Multilayerd_Model  #Dual_Diss_Model_Steady #Surface_Kinetics_General_UDF
+        sulfuration=False,
+        initial_distribution="Popydisperse",
+        sulfur_percentage=.09
+    )) 
 _, solutions = model.run()
 
 ```
@@ -118,43 +124,47 @@ _, solutions = model.run()
 Use `MappingWrapper` to sweep over multiple reactor conditions and generate 2D parametric maps:
 
 ```python
+
 from pathlib import Path
-from carbonx import MappingWrapper
+from carbonx.core import MappingWrapper
 from carbonx.modules.simulation_setup_loader import build_kwargs
 
-SETUP_FILE = Path("simulation_setup.txt")
-
-model = MappingWrapper (map_requested="P&T",
-                          grid_total =1025,
-                          P_range_min =0.001 ,
-                          P_range_max =0.01 ,
-                          P_iso =0.01 ,
-                          T_range_min =800 ,
-                          T_range_max =1200 ,
-                          T_iso =873 ,
-                          xdp_range_min =10e-9 ,
-                          xdp_range_max =50e-9 ,
-                          xdp_const =15e-9 ,
-                          L_reactor_range_min =0.1 ,
-                          L_reactor_range_max =1 ,
-                          L_reactor =0.6 ,
-                          xN_range_min =1e17 ,
-                          xN_range_max =10e17 ,
-                          xN_const =1e11 ,
-                          scale_min =10e-8 ,
-                          scale_max =7e-6 ,
-                          ml_method = " mean " ,
-                          ml_lambda_ =0.001 ,
-                          ml_iterations =10000 ,
-                          ml_alpha =1.5 ,
-                          surface_kinetics_type = " multilayered_model " ,# "multilayered_model"
-                          ml_post_cond = True) 
- 
-_, solutions = model.run()
 
 
-results = model.run_parametric_study()
-model.parametricstudyvisualizer()
+
+wrapper = MappingWrapper(map_param="T&p",
+                              grid_total=1025,
+                              P_range_min=0.001,
+                              P_range_max=0.01,
+                              P_iso=0.01,
+                              T_range_min=800,
+                              T_range_max=1200,
+                              T_iso=873,
+                              xdp_range_min=10e-9,
+                              xdp_range_max=50e-9,
+                              xdp_const=15e-9,
+                              L_reactor_range_min=0.1,
+                              L_reactor_range_max=1,
+                              L_reactor=0.6,
+                              xN_range_min=1e17,
+                              xN_range_max=10e17,
+                              xN_const=1e11,
+                              scale_min=2e-8,   
+                              scale_max=5e-6,
+                              ml_method='mean',
+                              ml_lambda_=0.001,
+                              ml_iterations=10000,
+                              ml_alpha=1.5,
+                              surface_kinetics_type="Multilayerd_Model",
+                              ml_post_cond=True)
+    
+     
+    
+    # Run parametric study
+    results = wrapper.run()
+
+    # Visualize results (automatically uses the last generated file)
+    wrapper.plot_map()
 
 ```
 
