@@ -4,11 +4,12 @@
 
 
 from pathlib import Path
-from carbonx import GasReactor
+from carbonx.core.carbonx_wrapper import FCCVD_GasReactor
 from carbonx.modules.simulation_setup_loader import build_kwargs
 
+
 SETUP_FILE = Path("simulation_setup.txt")
-model = GasReactor(
+model = FCCVD_GasReactor(
     **build_kwargs(
         SETUP_FILE,
         total_pressure=8000,
