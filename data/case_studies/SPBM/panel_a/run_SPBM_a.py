@@ -1,7 +1,11 @@
-from carbonx import GasReactor
+from pathlib import Path
+from carbonx.core.carbonx_wrapper import FCCVD_GasReactor
 from carbonx.modules.simulation_setup_loader import build_kwargs
+from carbonx.core.carbonx_wrapper import SCVD_GasReactor
+
+
 SETUP_FILE = Path("simulation_setup.txt")
-model = GasReactor(
+model = FCCVD_GasReactor(
     **build_kwargs(
         SETUP_FILE,
         catalsyt_element="Fe",
@@ -21,10 +25,9 @@ model = GasReactor(
         dp_initial_premade=5.43e-10, # 2.52 (Fe1), 3.78 (Fe2), 5.6 (Fe4), 6.81 (Fe7)
         surface_kinetics_solver_activated=False,
         carb_struct_enabled=False,
+        sulfuration=False,
+        sintering_blocksge_by_gp=False,
+        collision_kernel_enhc=False,  
     )
-)  
+)
 _, solutions = model.run()
-# Optional:
-# Uncomment this line only when you want to export the model data.
-# This creates a "data" folder in the current working directory.
-object_converter.object_converter(model)
