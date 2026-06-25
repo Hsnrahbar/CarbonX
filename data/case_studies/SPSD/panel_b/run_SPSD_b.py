@@ -1,11 +1,11 @@
 from pathlib import Path
-from carbonx import GasReactor
+from carbonx.core.carbonx_wrapper import FCCVD_GasReactor
 from carbonx.modules.simulation_setup_loader import build_kwargs
+from carbonx.core.carbonx_wrapper import SCVD_GasReactor
 
 
 SETUP_FILE = Path("simulation_setup.txt")
-
-model = GasReactor(
+model = FCCVD_GasReactor(
     **build_kwargs(
         SETUP_FILE,
         catalsyt_element="Fe",
@@ -28,10 +28,15 @@ model = GasReactor(
         time_increment_Fe=1e-4,
         surface_kinetics_solver_activated=False,
         carb_struct_enabled=False,
+        sulfuration=False,
+        sintering_blocksge_by_gp=False,
+        collision_kernel_enhc=False, 
     )) 
 _, solutions = model.run()
 
 from carbonx import Results_Processor 
 AA=Results_Processor.ResultsPostProcessor(model)
 AA.plot_psi_eta_diagram([.0001, .0005, .4],add_experimental=True,regime_type='CR') 
+
+
 
